@@ -21,7 +21,19 @@
 			$data["content"] = "penyakit/content";
 			$data["template"] = "penyakit/template";
 			
-			$data["list_penyakit"] = $this->penyakit_model->list_penyakit();
+			$this->load->library('pagination');
+			
+			$config['base_url'] = base_url('penyakit/page');
+			$config['total_rows'] = 200;
+			$config['per_page'] = 20;
+			$config["uri_segment"] = 3;
+			$config["num_links"] = 2;
+			$config["use_page_numbers"] = TRUE;
+			$config["page_query_string"] = TRUE;
+			
+			$this->pagination->initialize($config);
+			
+			$data["list_penyakit"] = $this->penyakit_model->list_penyakit_limit();
 			
 			$this->load->view("index",$data);	
 			
@@ -57,6 +69,11 @@
 			
 			$this->load->view("index",$data);		
 			
+		}
+		
+		function test()
+		{
+			echo " oops ";	
 		}
 		
 		
