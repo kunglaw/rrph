@@ -21,19 +21,55 @@
 			$data["content"] = "penyakit/content";
 			$data["template"] = "penyakit/template";
 			
+			$start = 0;
+			$limit = 10;
+			$page_uri = $this->uri->segment(3);
+			
+			if(!empty($page_uri) || $page_uri > 0)
+			{
+				$start = ($limit*$page_uri)+1;
+			}
+			
+			
+			$data["list_penyakit"] = $this->penyakit_model->list_penyakit_limit($start,$limit);
+			$count = $this->penyakit_model->count_penyakit();
+			
 			$this->load->library('pagination');
 			
-			$config['base_url'] = base_url('penyakit/page');
-			$config['total_rows'] = 200;
-			$config['per_page'] = 20;
+			$config['base_url']   = base_url('penyakit/page');
+			$config['total_rows'] = $count;
+			$config['per_page']    = $limit;
 			$config["uri_segment"] = 3;
-			$config["num_links"] = 2;
-			$config["use_page_numbers"] = TRUE;
-			$config["page_query_string"] = TRUE;
+			$config["num_links"]   = 5;
+			$config["use_page_numbers"]  = TRUE;
+			//$config["page_query_string"] = TRUE;
+			
+			$config['first_tag_open']   = "<span class='btn btn-primary'>";
+			$config['first_link'] 	   = "First";
+			$config['first_tag_close']  = "</span>";
+			
+			$config['prev_link'] 		= "Prev";
+			$config['prev_tag_open'] 	= "<span class='btn btn-primary'>";
+			$config['prev_tag_close']   = "</span>";
+			
+			$config['cur_tag_open'] 	 = "<span class='active btn btn-default'>";
+			$config['cur_tag_close'] 	= "</span>";
+			
+			$config['next_link'] 		= "Next";
+			$config['next_tag_open'] 	= "<span class='active btn btn-primary'>";
+			$config['next_tag_close']   = "</span>";
+			
+			$config['num_tag_open'] 	 = "<span class='active btn btn-primary'>";
+			$config['num_tag_close'] 	= "</span>";
+			
+			$config['last_tag_open'] 	= "<span class='active btn btn-primary'>";
+			$config['last_link'] 		= "Last";
+			$config['last_tag_close']   = "</span>";
 			
 			$this->pagination->initialize($config);
 			
-			$data["list_penyakit"] = $this->penyakit_model->list_penyakit_limit();
+			$data["create_link"] = $this->pagination->create_links();
+			
 			
 			$this->load->view("index",$data);	
 			
@@ -73,7 +109,8 @@
 		
 		function test()
 		{
-			echo " oops ";	
+			$jml = $this->penyakit_model->count_penyakit();
+			echo $jml;
 		}
 		
 		

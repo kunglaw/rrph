@@ -12,6 +12,15 @@
 			
 		}
 		
+		function count_penyakit()
+		{
+			$str = "SELECT count(id_penyakit) AS jml FROM penyakit_ms ";
+			$q = $this->db->query($str);
+			$f = $q->row_array();
+			//return $f;
+			return $f["jml"];
+		}
+		
 		function list_penyakit_limit($start,$limit)
 		{
 			$str = "SELECT * FROM penyakit_ms LIMIT $start,$limit";

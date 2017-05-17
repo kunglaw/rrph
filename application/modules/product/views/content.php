@@ -42,8 +42,6 @@
 
     <div class="container ">
          <div class="row">
-         
-              
                     
             <p class="woocommerce-result-count">
                   Showing 1–9 of 23 results</p>
@@ -91,7 +89,7 @@
               <?php } ?>
             </ul>
                       
-                
+            
          
          </div> <!-- end row -->
     </div>
